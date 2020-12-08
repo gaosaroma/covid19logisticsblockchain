@@ -8,6 +8,7 @@ public class Covid19logisticsblockchainApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(Covid19logisticsblockchainApplication.class, args);
+        System.out.println("Hello");
     }
 
 }
