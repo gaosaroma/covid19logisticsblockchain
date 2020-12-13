@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tjsse20.covid19logisticsblockchain.mapper.StationMapper">
+
+    <resultMap type="transferStation" id="stationMap">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="address_id" column="addressId"/>
+        <result property="contact_tel" column="typeName"/>
+        <result property="status_" column="status"/>
+        <result property="risk" column="risk"/>
+        <result property="transportation_type" column="transportationType"/>
+        <result property="transportation_code" column="transportationCode"/>
+        <result property="transportation_comment" column="transportationComment"/>
+    </resultMap>
+
+    <select id="getAll" resultMap="stationMap">
+        select * from transfer_station;
+    </select>
+
+</mapper>
+
