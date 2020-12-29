@@ -32,4 +32,7 @@ public class ConstantDefinition {
     public static int RELATED_PERSON_TYPE_PERSON = 0;
     public static int RELATED_PERSON_TYPE_SHOP = 1;
 
+    public static int RISK_APPLY = 1;
+    public static int RISK_CANCEL = 2;
+
 }

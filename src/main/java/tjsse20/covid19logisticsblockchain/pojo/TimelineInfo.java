@@ -1,5 +1,7 @@
 package tjsse20.covid19logisticsblockchain.pojo;
 
+import tjsse20.covid19logisticsblockchain.util.DateUtil;
+
 import java.util.Date;
 
 public class TimelineInfo {
@@ -11,6 +13,24 @@ public class TimelineInfo {
     private Integer risk;
     private Float longitude;
     private Float latitude;
+    private String riskBlock;
+    private String stationType;
+
+    public String getStationType() {
+        return stationType;
+    }
+
+    public void setStationType(String stationType) {
+        this.stationType = stationType;
+    }
+
+    public String getRiskBlock() {
+        return riskBlock;
+    }
+
+    public void setRiskBlock(String riskBlock) {
+        this.riskBlock = riskBlock;
+    }
 
     public Integer getStatus() {
         return status;
@@ -20,16 +40,16 @@ public class TimelineInfo {
         this.status = status;
     }
 
-    public Date getArrivingTime() {
-        return arrivingTime;
+    public String getArrivingTime() {
+        return arrivingTime == null ? null : DateUtil.dateToString(arrivingTime);
     }
 
     public void setArrivingTime(Date arrivingTime) {
         this.arrivingTime = arrivingTime;
     }
 
-    public Date getLeavingTime() {
-        return leavingTime;
+    public String getLeavingTime() {
+        return leavingTime == null ? null : DateUtil.dateToString(leavingTime);
     }
 
     public void setLeavingTime(Date leavingTime) {

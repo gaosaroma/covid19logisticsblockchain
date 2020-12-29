@@ -1,5 +1,7 @@
 package tjsse20.covid19logisticsblockchain.pojo;
 
+import tjsse20.covid19logisticsblockchain.util.DateUtil;
+
 import java.awt.geom.FlatteningPathIterator;
 import java.util.Date;
 
@@ -20,6 +22,42 @@ public class LogisticsInfo {
     private String destAddress;
     private Float destLongitude;
     private Float destLatitude;
+    private String srcCity;
+    private String destCity;
+    private String riskBlock;
+    private Integer orderId;
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getRiskBlock() {
+        return riskBlock;
+    }
+
+    public void setRiskBlock(String riskBlock) {
+        this.riskBlock = riskBlock;
+    }
+
+    public String getSrcCity() {
+        return srcCity;
+    }
+
+    public void setSrcCity(String srcCity) {
+        this.srcCity = srcCity;
+    }
+
+    public String getDestCity() {
+        return destCity;
+    }
+
+    public void setDestCity(String destCity) {
+        this.destCity = destCity;
+    }
 
     public Float getSrcLongitude() {
         return srcLongitude;
@@ -93,16 +131,16 @@ public class LogisticsInfo {
         this.status = status;
     }
 
-    public Date getArrivingTime() {
-        return arrivingTime;
+    public String getArrivingTime() {
+        return arrivingTime == null ? null : DateUtil.dateToString(arrivingTime);
     }
 
     public void setArrivingTime(Date arrivingTime) {
         this.arrivingTime = arrivingTime;
     }
 
-    public Date getLeavingTime() {
-        return leavingTime;
+    public String getLeavingTime() {
+        return leavingTime == null ? null : DateUtil.dateToString(leavingTime);
     }
 
     public void setLeavingTime(Date leavingTime) {

@@ -59,6 +59,10 @@ public class RiskService {
         logisticsMapper.updateRisk(riskInfo.getStationId(), riskInfo.getRiskType());
     }
 
+    public RiskInfo getById(int id){
+        return riskMapper.select(id);
+    }
+
     public void rejectApply(RiskSubmit riskSubmit){
         riskSubmit.setStatus(ConstantDefinition.RISK_SUBMIT_REJECTED);
         riskMapper.updateStatus(riskSubmit);

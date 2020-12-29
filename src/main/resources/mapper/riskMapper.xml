@@ -9,26 +9,25 @@
     <select id="select" resultMap="riskMap" parameterType="Integer">
         select r.id, r.risk_code, r.type risk_type, r.status_ status, r.submitter submitter_id, u1.username submitter, r.station_id station_id, t.name station_name,
                t.address station_address, r.submit_time submit_time, r.submit_comment submit_comment, r.auditor auditor_id,
-               u2.username auditor, r.audit_comment audit_comment
-        from risk_submit r, user u1, transfer_station t, user u2
-        where r.id = #{id} and r.submitter = u1.id and r.station_id = t.id and r.auditor = u2.id
+               u2.username auditor, r.audit_comment audit_comment, r.apply_type, o.id order_id
+        from risk_submit r, user u1, transfer_station t, user u2, logistics l, order_ o
+        where r.id = #{id} and r.submitter = u1.id and r.station_id = t.id and r.auditor = u2.id and r.logistics_id = l.id and l.order_id = o.id
     </select>
 
     <select id="selectRiskByStatus" resultMap="riskMap" parameterType="Integer">
         select r.id, r.risk_code, r.type risk_type, r.status_ status, r.submitter submitter_id, u1.username submitter, r.station_id station_id, t.name station_name,
                t.address station_address, r.submit_time submit_time, r.submit_comment submit_comment, r.auditor auditor_id,
-               u2.username auditor, r.audit_comment audit_comment
-        from risk_submit r, user u1, transfer_station t, user u2
-        where r.submitter = u1.id and r.auditor = u2.id and r.status_ = #{status} and r.station_id = t.id order by submit_time desc;
-    </select>
+               u2.username auditor, r.audit_comment audit_comment, r.apply_type, o.id order_id
+        from risk_submit r, user u1, transfer_station t, user u2, logistics l, order_ o
+        where r.submitter = u1.id and r.auditor = u2.id and r.status_ = #{status} and r.station_id = t.id and r.logistics_id = l.id and l.order_id = o.id order by submit_time desc;
+        </select>
 
     <select id="selectRiskBySubmitter" resultMap="riskMap" parameterType="Integer">
-
 select r.id, r.risk_code, r.type risk_type, r.status_ status, r.submitter submitter_id, u1.username submitter, r.station_id station_id, t.name station_name,
                t.address station_address, r.submit_time submit_time, r.submit_comment submit_comment, r.auditor auditor_id,
-               u2.username auditor, r.audit_comment audit_comment
-        from risk_submit r, user u1, transfer_station t, user u2
-        where r.submitter = u1.id and r.submitter = #{submitterId} and r.station_id = t.id and r.auditor = u2.id
+               u2.username auditor, r.audit_comment audit_comment, r.apply_type, o.id order_id
+        from risk_submit r, user u1, transfer_station t, user u2, logistics l, order_ o
+        where r.submitter = u1.id and r.submitter = #{submitterId} and r.station_id = t.id and r.auditor = u2.id and r.logistics_id = l.id and l.order_id = o.id
 order by submit_time desc;
     </select>
 
@@ -51,6 +50,8 @@ order by submit_time desc;
         set r.status_ = #{status}, r.audit_comment=#{auditComment}
         where r.id = #{id};
     </update>
+    
+
 
 
 

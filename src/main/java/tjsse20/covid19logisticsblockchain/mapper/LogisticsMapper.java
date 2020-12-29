@@ -7,6 +7,7 @@ import tjsse20.covid19logisticsblockchain.entity.Logistics;
 import tjsse20.covid19logisticsblockchain.entity.Order;
 import tjsse20.covid19logisticsblockchain.entity.RelatedPerson;
 import tjsse20.covid19logisticsblockchain.pojo.LogisticsInfo;
+import tjsse20.covid19logisticsblockchain.pojo.OrderInfo;
 import tjsse20.covid19logisticsblockchain.pojo.TimelineInfo;
 
 import java.util.Date;
@@ -20,6 +21,8 @@ public interface LogisticsMapper {
     List<LogisticsInfo> selectByOrderId(int orderId);
 
     List<TimelineInfo> selectTimeLineByOrderId(int orderId);
+
+    List<OrderInfo> selectOrderById(int id);
 
     List<Logistics> selectLogisticsByOrder(int orderId);
     void updateRisk(int stationId, int risk);

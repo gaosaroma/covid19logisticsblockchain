@@ -1,5 +1,7 @@
 package tjsse20.covid19logisticsblockchain.pojo;
 
+import tjsse20.covid19logisticsblockchain.util.DateUtil;
+
 import java.util.Date;
 
 public class RiskInfo {
@@ -17,6 +19,24 @@ public class RiskInfo {
     private String auditor;
     private String auditComment;
     private Integer status;
+    private Integer applyType;
+    private Integer orderId;
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public Integer getApplyType() {
+        return applyType;
+    }
+
+    public void setApplyType(Integer applyType) {
+        this.applyType = applyType;
+    }
 
     public Integer getId() {
         return id;
@@ -82,8 +102,8 @@ public class RiskInfo {
         this.stationAddress = stationAddress;
     }
 
-    public Date getSubmitTime() {
-        return submitTime;
+    public String getSubmitTime() {
+        return submitTime == null ? null : DateUtil.dateToString(submitTime);
     }
 
     public void setSubmitTime(Date submitTime) {
