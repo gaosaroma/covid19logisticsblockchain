@@ -8,15 +8,17 @@ import tjsse20.covid19logisticsblockchain.service.UserService;
 import tjsse20.covid19logisticsblockchain.util.ConstantDefinition;
 import tjsse20.covid19logisticsblockchain.util.MD5Util;
 
+import java.util.ConcurrentModificationException;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "getUser/{id}", method = RequestMethod.GET)
-    public User getUser(@PathVariable int id){
-        return userService.getUser(id);
+    @RequestMapping(value = "get/{id}", method = RequestMethod.GET)
+    public StandardResult getUser(@PathVariable int id){
+        return new StandardResult(ConstantDefinition.REQUEST_OK, userService.getUser(id));
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
@@ -51,5 +53,11 @@ public class UserController {
             result.addObject(user);
         }
         return result;
+    }
+
+    @RequestMapping("/update")
+    @ResponseBody
+    public StandardResult update(@RequestBody User user){
+        return new StandardResult(ConstantDefinition.REQUEST_OK, userService.update(user));
     }
 }

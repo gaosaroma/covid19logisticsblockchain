@@ -9,9 +9,8 @@ import tjsse20.covid19logisticsblockchain.entity.User;
 public interface UserMapper {
 
     User select(Integer id);
-
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void register(User user);
-
     User selectByTel(String telephone);
+    void update(User user);
 }

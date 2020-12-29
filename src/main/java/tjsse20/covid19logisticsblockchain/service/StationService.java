@@ -12,7 +12,25 @@ public class StationService {
     @Autowired
     StationMapper stationMapper;
 
+    public TransferStation getById(Integer id){
+        return stationMapper.select(id);
+    }
+
+    public TransferStation update(TransferStation station){
+        stationMapper.update(station);
+        return station;
+    }
+
     public List<TransferStation> getAllStations(){
         return stationMapper.getAll();
+    }
+
+    public TransferStation createStation(TransferStation station){
+        stationMapper.insert(station);
+        return station;
+    }
+
+    public List<TransferStation> getStationByType(String type){
+        return stationMapper.selectByType(type);
     }
 }

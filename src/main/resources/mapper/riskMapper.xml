@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tjsse20.covid19logisticsblockchain.mapper.RiskMapper">
+    
+    <resultMap id="riskMap" type="RiskInfo">
+
+    </resultMap>
+
+    <select id="select" resultMap="riskMap" parameterType="Integer">
+        select r.id, r.risk_code, r.type risk_type, r.status_ status, r.submitter submitter_id, u1.username submitter, r.station_id station_id, t.name station_name,
+               t.address station_address, r.submit_time submit_time, r.submit_comment submit_comment, r.auditor auditor_id,
+               u2.username auditor, r.audit_comment audit_comment
+        from risk_submit r, user u1, transfer_station t, user u2
+        where r.id = #{id} and r.submitter = u1.id and r.station_id = t.id and r.auditor = u2.id
+    </select>
+
+    <select id="selectRiskByStatus" resultMap="riskMap" parameterType="Integer">
+        select r.id, r.risk_code, r.type risk_type, r.status_ status, r.submitter submitter_id, u1.username submitter, r.station_id station_id, t.name station_name,
+               t.address station_address, r.submit_time submit_time, r.submit_comment submit_comment, r.auditor auditor_id,
+               u2.username auditor, r.audit_comment audit_comment
+        from risk_submit r, user u1, transfer_station t, user u2
+        where r.submitter = u1.id and r.auditor = u2.id and r.status_ = #{status} and r.station_id = t.id order by submit_time desc;
+    </select>
+
+    <select id="selectRiskBySubmitter" resultMap="riskMap" parameterType="Integer">
+
+select r.id, r.risk_code, r.type risk_type, r.status_ status, r.submitter submitter_id, u1.username submitter, r.station_id station_id, t.name station_name,
+               t.address station_address, r.submit_time submit_time, r.submit_comment submit_comment, r.auditor auditor_id,
+               u2.username auditor, r.audit_comment audit_comment
+        from risk_submit r, user u1, transfer_station t, user u2
+        where r.submitter = u1.id and r.submitter = #{submitterId} and r.station_id = t.id and r.auditor = u2.id
+order by submit_time desc;
+    </select>
+
+    <select id="selectAllRisks" resultMap="riskMap">
+        select r.id, r.risk_code, r.type risk_type, r.status_ status, r.submitter submitter_id, u1.username submitter, r.station_id station_id, t.name station_name,
+               t.address station_address, r.submit_time submit_time, r.submit_comment submit_comment, r.auditor auditor_id,
+               u2.username auditor, r.audit_comment audit_comment
+        from risk_submit r, user u1, transfer_station t, user u2
+        where r.submitter = u1.id and r.station_id = t.id and r.auditor = u2.id
+order by submit_time desc;
+    </select>
+
+    <insert id="insert" parameterType="RiskSubmit">
+        insert into risk_submit(risk_code, submitter, station_id, logistics_id, submit_comment, type, status_, auditor, submit_time, attached_files, audit_comment )
+    value (#{riskCode}, #{submitter}, #{stationId}, #{logisticsId}, #{submitComment}, #{type}, #{status}, #{auditor}, #{submitTime}, #{attachedFiles}, #{auditComment});
+    </insert>
+
+    <update id="updateStatus" parameterType="RiskSubmit">
+        update risk_submit r
+        set r.status_ = #{status}, r.audit_comment=#{auditComment}
+        where r.id = #{id};
+    </update>
+
+
+
+</mapper>
+

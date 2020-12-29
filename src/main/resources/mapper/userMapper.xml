@@ -23,5 +23,16 @@
         insert into user(telephone,type,type_name,passwd,identity_card,status_,station_id,username,introduction,contact_person)
         values(#{telephone},#{type},#{typeName},#{passwd},#{identityCard},#{status},#{stationId},#{username},#{introduction},#{contactPerson});
     </insert>
+
+    <update id="update" parameterType="User">
+        update user
+set telephone = #{telephone}, type = #{type}, type_name = #{typeName}, passwd = #{passwd}, identity_card = #{identityCard}, status_ = #{status},
+    station_id = #{stationId}, username = #{username}, introduction = #{introduction}, contact_person = #{contactPerson}
+where id = #{id};
+    </update>
+
+    <select id="select" resultType="User" parameterType="Integer">
+        select * from user where id = #{id};
+    </select>
 </mapper>
 

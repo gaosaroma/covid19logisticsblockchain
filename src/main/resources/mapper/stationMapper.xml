@@ -2,21 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tjsse20.covid19logisticsblockchain.mapper.StationMapper">
 
-    <resultMap type="transferStation" id="stationMap">
-        <id property="id" column="id"/>
-        <result property="name" column="name"/>
-        <result property="address_id" column="addressId"/>
-        <result property="contact_tel" column="typeName"/>
-        <result property="status_" column="status"/>
-        <result property="risk" column="risk"/>
-        <result property="transportation_type" column="transportationType"/>
-        <result property="transportation_code" column="transportationCode"/>
-        <result property="transportation_comment" column="transportationComment"/>
-    </resultMap>
+<!--    <resultMap type="transferStation" id="stationMap">-->
+<!--    </resultMap>-->
 
-    <select id="getAll" resultMap="stationMap">
+    <select id="select" resultType="TransferStation" parameterType="Integer">
+        select * from transfer_station where id = #{id};
+    </select>
+
+    <select id="getAll" resultType="TransferStation">
         select * from transfer_station;
     </select>
 
+    <select id="selectByType" resultType="TransferStation" parameterType="String">
+        select * from transfer_station where transportation_type = #{transportation_type};
+    </select>
+
+    <update id="updateRisk">
+        update transfer_station t
+set t.risk = #{risk}
+where t.id = #{stationId};
+    </update>
+
+    <insert id="insert" parameterType="TransferStation">
+        insert into transfer_station(name, address, contact_tel, status_, risk, transportation_type, transportation_code, transportation_comment, longitude, latitude)
+            value (#{name}, #{address}, #{contactTel}, #{status}, #{risk}, #{transportationType}, #{transportationCode}, #{transportationComment}, #{longitude}, #{latitude});
+    </insert>
+    
+    <update id="update" parameterType="TransferStation">
+        update transfer_station
+set name=#{name}, address=#{address}, contact_tel=#{contactTel}, status_=#{status}, risk=#{risk}, transportation_type=#{transportationCode},
+    transportation_code=#{transportationCode}, transportation_comment=#{transportationComment}, longitude=#{longitude}, latitude=#{latitude}
+where id=#{id};
+    </update>
 </mapper>
 

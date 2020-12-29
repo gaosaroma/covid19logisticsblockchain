@@ -10,7 +10,7 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
-  type-aliases-package: tjsse20.covid19logisticsblockchain.entity
+  type-aliases-package: tjsse20.covid19logisticsblockchain.entity, tjsse20.covid19logisticsblockchain.pojo
   configuration:
     map-underscore-to-camel-case: true
 

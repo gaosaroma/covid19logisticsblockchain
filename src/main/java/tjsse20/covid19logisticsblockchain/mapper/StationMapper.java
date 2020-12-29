@@ -7,5 +7,10 @@ import java.util.List;
 
 @Repository
 public interface StationMapper {
+    TransferStation select(Integer id);
     List<TransferStation> getAll();
+    List<TransferStation> selectByType(String type);
+    void updateRisk(int stationId, int risk);
+    void insert(TransferStation station);
+    void update(TransferStation station);
 }

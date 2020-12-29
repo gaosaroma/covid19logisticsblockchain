@@ -13,6 +13,11 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
+    public User update(User user){
+        userMapper.update(user);
+        return user;
+    }
+
     public User getUser(Integer id){
         return userMapper.select(id);
     }
