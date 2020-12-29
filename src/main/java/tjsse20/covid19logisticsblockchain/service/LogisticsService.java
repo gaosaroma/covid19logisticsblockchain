@@ -1,9 +1,7 @@
 package tjsse20.covid19logisticsblockchain.service;
 
-import com.sun.tools.corba.se.idl.constExpr.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.rmi.runtime.Log;
 import tjsse20.covid19logisticsblockchain.entity.Logistics;
 import tjsse20.covid19logisticsblockchain.entity.Order;
 import tjsse20.covid19logisticsblockchain.entity.RelatedPerson;
@@ -13,7 +11,6 @@ import tjsse20.covid19logisticsblockchain.pojo.LogisticsInfo;
 import tjsse20.covid19logisticsblockchain.pojo.TimelineInfo;
 import tjsse20.covid19logisticsblockchain.util.ConstantDefinition;
 
-import java.util.ConcurrentModificationException;
 import java.util.Date;
 import java.util.List;
 
