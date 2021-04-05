@@ -1,45 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="tjsse20.covid19logisticsblockchain.mapper.LogisticsMapper">
+<mapper namespace="tjsse20.covid19logisticsblockchain.mapper.LogisticsBlockMapper">
 
     <resultMap type="LogisticsInfo" id="logisticsMap">
-<!--        <id property="id" column="id"/>-->
-<!--        <result property="status" column="status"/>-->
-<!--        <result property="arrivingTime" column="arriving_time"/>-->
-<!--        <result property="leavingTime" column="leaving_time"/>-->
-<!--        <result property="riskLevel" column="risk_level"/>-->
-<!--        <result property="stationName" column="station_name"/>-->
-<!--        <result property="currAddress" column="station_address"/>-->
-<!--        <result property="addressor" column="addressor"/>-->
-<!--        <result property="srcAddress" column="src_address"/>-->
-<!--        <result property="srcLongitude" column="src_longitude"/>-->
-<!--        <result property="srcLatitude" column="src_latitude"/>-->
-<!--        <result property="srcCity" column="src_city"/>-->
-<!--        <result property="recipient" column="recipient"/>-->
-<!--        <result property="destAddress" column="dest_address"/>-->
-<!--        <result property="destCity" column="dest_city"/>-->
-<!--        <result property="destLongitude" column="dest_longitude"/>-->
-<!--        <result property="destLatitude" column="dest_latitude"/>-->
-<!--        <result property="riskBlock" column="risk_block"/>-->
-<!--        <result property="orderId" column="order_id"/>-->
-<!--        <result property="workerName" column="worker_name"/>-->
     </resultMap>
 
     <resultMap id="timelineMap" type="TimelineInfo">
-<!--        <result property="status" column="status"/>-->
-<!--        <result property="arrivingTime" column="arriving_time"/>-->
-<!--        <result property="leavingTime" column="leaving_time"/>-->
-<!--        <result property="stationName" column="station_name"/>-->
-<!--        <result property="workerName" column="worker_name"/>-->
-<!--        <result property="risk" column="risk"/>-->
-<!--        <result property="longitude" column="longitude"/>-->
-<!--        <result property="latitude" column="latitude"/>-->
-<!--        <result property="riskBlock" column="risk_block"/>-->
     </resultMap>
 
     <select id="selectByUserId" resultMap="logisticsMap" parameterType="Integer">
         select l.id id, l.status_ status, l.arriving_time arriving_time, leaving_time, l.risk_level, t.name station_name, t.address station_address, r1.address dest_address, r2.address src_address, r2.name addressor, r1.name recipient, r1.city dest_city, r2.city src_city, l.risk_block, o.id order_id
-from logistics l, order_ o, transfer_station t, related_person r1, related_person r2
+from logistics_block l, order_ o, transfer_station t, related_person r1, related_person r2
 where l.order_id = o.id and l.submiter = #{userId} and l.station_id = t.id and o.recipient_id = r1.id and o.addressor_id = r2.id
 order by l.arriving_time desc;
     </select>
@@ -47,27 +18,26 @@ order by l.arriving_time desc;
     <select id="selectByOrderId" resultMap="logisticsMap" parameterType="Integer">
         select l.id id, l.status_ status, l.arriving_time arriving_time, l.risk_level, t.name station_name, t.address station_address,
        r1.name recipient, r1.address dest_address, r1.longitude dest_longitude, r1.latitude dest_latitude, r2.address src_address, r2.name addressor, r2.longitude src_longitude, r2.latitude src_latitude, r1.city dest_city, r2.city src_city, l.risk_block, o.id order_id, u.username worker_name
-       , l.station_id station_id
-from logistics l, order_ o, transfer_station t, related_person r1, related_person r2, user u
+from logistics_block l, order_ o, transfer_station t, related_person r1, related_person r2, user u
 where l.order_id = o.id and o.id = #{orderId} and l.station_id = t.id and o.recipient_id = r1.id and o.addressor_id = r2.id and l.status_ = 1 and l.submiter = u.id
     </select>
 
     <select id="selectAllByOrderId" resultMap="logisticsMap" parameterType="Integer">
         select l.id id, l.status_ status, l.arriving_time arriving_time, l.risk_level, t.name station_name, t.address station_address,
        r1.name recipient, r1.address dest_address, r1.longitude dest_longitude, r1.latitude dest_latitude, r2.address src_address, r2.name addressor, r2.longitude src_longitude, r2.latitude src_latitude, r1.city dest_city, r2.city src_city, l.risk_block, o.id order_id, u.username worker_name, t.id station_id
-from logistics l, order_ o, transfer_station t, related_person r1, related_person r2, user u
+from logistics_block l, order_ o, transfer_station t, related_person r1, related_person r2, user u
 where l.order_id = o.id and o.id = #{orderId} and l.station_id = t.id and o.recipient_id = r1.id and o.addressor_id = r2.id and l.submiter = u.id
     </select>
 
     <select id="selectTimeLineByOrderId" resultMap="timelineMap" parameterType="Integer">
         select l.status_ status, l.arriving_time arriving_time, l.leaving_time leaving_time, t.name station_name, u.username worker_name,
-       l.risk_level risk, t.longitude longitude, t.latitude latitude, l.risk_block risk_block, t.transportation_type station_type
-from logistics l, order_ o, transfer_station t, user u
+      l.risk_level risk, t.longitude longitude, t.latitude latitude, l.risk_block risk_block, t.transportation_type station_type
+from logistics_block l, order_ o, transfer_station t, user u
 where l.order_id = o.id and l.station_id = t.id and l.submiter = u.id and o.id = #{orderId} order by l.arriving_time desc;
     </select>
 
     <update id="updateRisk" parameterType="Integer">
-        update logistics l
+        update logistics_block l
         set l.risk_level = #{risk}
         where l.station_id = #{stationId};
     </update>
@@ -80,16 +50,16 @@ where l.order_id = o.id and l.station_id = t.id and l.submiter = u.id and o.id =
     </insert>
 
     <insert id="insertLogistics" parameterType="Logistics">
-        insert into logistics(station_id, arriving_time, leaving_time, risk_level, submiter, status_, order_id, risk_block)
+        insert into logistics_block(station_id, arriving_time, leaving_time, risk_level, submiter, status_, order_id, risk_block)
 value (#{stationId}, #{arrivingTime}, #{leavingTime}, #{riskLevel}, #{submiter}, #{status}, #{orderId}, #{riskBlock});
     </insert>
 
     <select id="selectLogisticsByOrder" resultType="Logistics" parameterType="Integer">
-        select * from logistics where order_id = #{orderId} order by arriving_time desc;
+        select * from logistics_block where order_id = #{orderId} order by arriving_time desc;
     </select>
 
     <update id="updateLogisticsArrivingTime" >
-        update logistics set leaving_time = #{leavingTime}, status_ = #{status} where id = #{id};
+        update logistics_block set leaving_time = #{leavingTime}, status_ = #{status} where id = #{id};
     </update>
 
     <insert id="insertRelatedPerson" parameterType="RelatedPerson">
@@ -102,7 +72,7 @@ value (#{stationId}, #{arrivingTime}, #{leavingTime}, #{riskLevel}, #{submiter},
 
     <select id="selectOrderById" parameterType="Integer" resultType="OrderInfo">
         select o.id id, order_time, r1.name addressor, r2.name recipient, l.risk_level, l.risk_block, u.username worker
-from order_ o, related_person r1, related_person r2, logistics l, user u
+from order_ o, related_person r1, related_person r2, logistics_block l, user u
 where o.addressor_id = r1.id and o.recipient_id = r2.id and l.order_id = o.id and l.submiter = u.id
   and o.id = #{id} order by l.arriving_time;
     </select>
@@ -110,7 +80,7 @@ where o.addressor_id = r1.id and o.recipient_id = r2.id and l.order_id = o.id an
     <select id="selectByStation" parameterType="Integer" resultMap="logisticsMap" >
         select l.id id, l.status_ status, l.arriving_time arriving_time, l.risk_level, t.name station_name, t.address station_address,
        r1.name recipient, r1.address dest_address, r1.longitude dest_longitude, r1.latitude dest_latitude, r2.address src_address, r2.name addressor, r2.longitude src_longitude, r2.latitude src_latitude, r1.city dest_city, r2.city src_city, l.risk_block, o.id order_id, u.username worker_name
-from logistics l, order_ o, transfer_station t, related_person r1, related_person r2, user u
+from logistics_block l, order_ o, transfer_station t, related_person r1, related_person r2, user u
 where l.order_id = o.id and l.station_id = t.id and o.recipient_id = r1.id and o.addressor_id = r2.id and l.status_ = 1 and l.submiter = u.id
     and t.id = #{stationId}
     </select>
@@ -118,7 +88,7 @@ where l.order_id = o.id and l.station_id = t.id and o.recipient_id = r1.id and o
     <select id="selectBySupplier" parameterType="Integer" resultMap="logisticsMap">
         select l.id id, l.status_ status, l.arriving_time arriving_time, l.risk_level, t.name station_name, t.address station_address,
        r1.name recipient, r1.address dest_address, r1.longitude dest_longitude, r1.latitude dest_latitude, r2.address src_address, r2.name addressor, r2.longitude src_longitude, r2.latitude src_latitude, r1.city dest_city, r2.city src_city, l.risk_block, o.id order_id, u.username worker_name
-from logistics l, order_ o, transfer_station t, related_person r1, related_person r2, user u, user u1
+from logistics_block l, order_ o, transfer_station t, related_person r1, related_person r2, user u, user u1
 where l.order_id = o.id and l.station_id = t.id and o.recipient_id = r1.id and o.addressor_id = r2.id and l.status_ = 1 and l.submiter = u.id
     and u1.id=#{id} and r2.contact_tel = u1.telephone
     </select>
@@ -126,17 +96,13 @@ where l.order_id = o.id and l.station_id = t.id and o.recipient_id = r1.id and o
     <select id="selectByUser" parameterType="Integer" resultMap="logisticsMap">
         select l.id id, l.status_ status, l.arriving_time arriving_time, l.risk_level, t.name station_name, t.address station_address,
        r1.name recipient, r1.address dest_address, r1.longitude dest_longitude, r1.latitude dest_latitude, r2.address src_address, r2.name addressor, r2.longitude src_longitude, r2.latitude src_latitude, r1.city dest_city, r2.city src_city, l.risk_block, o.id order_id, u.username worker_name
-from logistics l, order_ o, transfer_station t, related_person r1, related_person r2, user u, user u1
+from logistics_block l, order_ o, transfer_station t, related_person r1, related_person r2, user u, user u1
 where l.order_id = o.id and l.station_id = t.id and o.recipient_id = r1.id and o.addressor_id = r2.id and l.status_ = 1 and l.submiter = u.id
     and u1.id = #{id} and r1.contact_tel = u1.telephone
     </select>
 
     <select id="selectById" parameterType="Integer" resultType="Logistics">
-        select * from logistics where id = #{id}
-    </select>
-
-    <select resultType="Logistics" id="selectAll">
-        select * from logistics
+        select * from logistics_block where id = #{id}
     </select>
 
 </mapper>

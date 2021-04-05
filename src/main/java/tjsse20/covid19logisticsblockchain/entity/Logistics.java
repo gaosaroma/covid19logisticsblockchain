@@ -122,4 +122,19 @@ public class Logistics {
     public void setRiskBlock(String riskBlock) {
         this.riskBlock = riskBlock;
     }
+
+    @Override
+    public String toString() {
+        return "Logistics{" +
+                "id=" + id +
+                ", stationId=" + stationId +
+                ", arrivingTime=" + arrivingTime +
+                ", leavingTime=" + leavingTime +
+                ", riskLevel=" + riskLevel +
+                ", submiter=" + submiter +
+                ", status=" + status +
+                ", orderId=" + orderId +
+                ", riskBlock='" + riskBlock + '\'' +
+                '}';
+    }
 }

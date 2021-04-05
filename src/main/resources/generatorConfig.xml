@@ -12,9 +12,9 @@
             <property name="nullCatalogMeansCurrent" value="true" />
         </jdbcConnection>
         <javaModelGenerator targetPackage="tjsse20.covid19logisticsblockchain.entity" targetProject="src/main/java"/>
-        <table tableName="%">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
+<!--        <table tableName="%">-->
+<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
 <!--        <table tableName="address" domainObjectName="Address">-->
 <!--            <property name="useActualColumnNames" value="true" />-->
 <!--        </table>-->
@@ -35,10 +35,9 @@
 <!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
 
 <!--        </table>-->
-<!--        <table tableName="risk_submit" domainObjectName="RiskSubmit">-->
-<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-
-<!--        </table>-->
+        <table tableName="risk_submit" domainObjectName="RiskSubmit">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
 <!--        <table tableName="transfer_station" domainObjectName="TransferStation">-->
 <!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
 

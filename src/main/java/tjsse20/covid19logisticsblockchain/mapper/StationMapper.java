@@ -13,4 +13,5 @@ public interface StationMapper {
     void updateRisk(int stationId, int risk);
     void insert(TransferStation station);
     void update(TransferStation station);
+    TransferStation selectByWorker(int workerId);
 }

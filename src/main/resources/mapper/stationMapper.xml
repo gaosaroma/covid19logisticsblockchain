@@ -17,6 +17,12 @@
         select * from transfer_station where transportation_type = #{transportation_type};
     </select>
 
+    <select id="selectByWorker" resultType="TransferStation" parameterType="Integer">
+        select t.*
+from transfer_station t, user u
+where t.id = u.station_id and u.id = #{workerId}
+    </select>
+
     <update id="updateRisk">
         update transfer_station t
 set t.risk = #{risk}

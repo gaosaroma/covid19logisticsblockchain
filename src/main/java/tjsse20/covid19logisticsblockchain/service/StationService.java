@@ -33,4 +33,8 @@ public class StationService {
     public List<TransferStation> getStationByType(String type){
         return stationMapper.selectByType(type);
     }
+
+    public TransferStation getStationByWorker(int workerId){
+        return stationMapper.selectByWorker(workerId);
+    }
 }

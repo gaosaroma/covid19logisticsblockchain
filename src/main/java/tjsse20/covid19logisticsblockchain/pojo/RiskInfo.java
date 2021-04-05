@@ -21,6 +21,25 @@ public class RiskInfo {
     private Integer status;
     private Integer applyType;
     private Integer orderId;
+    private Date auditTime;
+    private String riskBlock;
+
+    public String getRiskBlock() {
+        return riskBlock;
+    }
+
+    public void setRiskBlock(String riskBlock) {
+        this.riskBlock = riskBlock;
+    }
+
+
+    public String getAuditTime() {
+        return auditTime == null ? null : DateUtil.dateToString(auditTime);
+    }
+
+    public void setAuditTime(Date auditTime) {
+        this.auditTime = auditTime;
+    }
 
     public Integer getOrderId() {
         return orderId;

@@ -26,6 +26,24 @@ public class LogisticsInfo {
     private String destCity;
     private String riskBlock;
     private Integer orderId;
+    private String workerName;
+    private Integer stationId;
+
+    public Integer getStationId() {
+        return stationId;
+    }
+
+    public void setStationId(Integer stationId) {
+        this.stationId = stationId;
+    }
+
+    public String getWorkerName() {
+        return workerName;
+    }
+
+    public void setWorkerName(String workerName) {
+        this.workerName = workerName;
+    }
 
     public Integer getOrderId() {
         return orderId;

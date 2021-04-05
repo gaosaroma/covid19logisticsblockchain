@@ -1,0 +1,19 @@
+#include <iostream>
+using namespace std;
+
+void f(int n, char i1, char i2, char i3){
+    if (n==1){
+        cout << i1 << "->" << i3 << endl;
+        return;
+    }
+    f(n-1, i1, i3, i2);
+    cout << i1 << "->" << i3 << endl;
+    f(n-1, i2, i1, i3);
+}
+
+int main(){
+    f(3, 'A', 'B', 'C');
+    return 0;
+}
+
+

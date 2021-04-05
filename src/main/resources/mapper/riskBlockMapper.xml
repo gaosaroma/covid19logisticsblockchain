@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="tjsse20.covid19logisticsblockchain.mapper.RiskMapper">
+<mapper namespace="tjsse20.covid19logisticsblockchain.mapper.RiskBlockMapper">
     
     <resultMap id="riskMap" type="RiskInfo">
 
@@ -10,7 +10,7 @@
         select r.id, r.risk_code, r.type risk_type, r.status_ status, r.submitter submitter_id, u1.username submitter, r.station_id station_id, t.name station_name,
                t.address station_address, r.submit_time submit_time, r.submit_comment submit_comment, r.auditor auditor_id,
                u2.username auditor, r.audit_comment audit_comment, r.apply_type, o.id order_id, r.audit_time audit_time, r.risk_block risk_block
-        from risk_submit r, user u1, transfer_station t, user u2, logistics l, order_ o
+        from risk_submit_block r, user u1, transfer_station t, user u2, logistics l, order_ o
         where r.id = #{id} and r.submitter = u1.id and r.station_id = t.id and r.auditor = u2.id and r.logistics_id = l.id and l.order_id = o.id
     </select>
 
@@ -18,7 +18,7 @@
         select r.id, r.risk_code, r.type risk_type, r.status_ status, r.submitter submitter_id, u1.username submitter, r.station_id station_id, t.name station_name,
                t.address station_address, r.submit_time submit_time, r.submit_comment submit_comment, r.auditor auditor_id,
                u2.username auditor, r.audit_comment audit_comment, r.apply_type, o.id order_id, r.audit_time audit_time, r.risk_block risk_block
-        from risk_submit r, user u1, transfer_station t, user u2, logistics l, order_ o
+        from risk_submit_block r, user u1, transfer_station t, user u2, logistics l, order_ o
         where r.submitter = u1.id and r.auditor = u2.id and r.status_ = #{status} and r.station_id = t.id and r.logistics_id = l.id and l.order_id = o.id order by submit_time desc;
         </select>
 
@@ -30,7 +30,7 @@
 select r.id, r.risk_code, r.type risk_type, r.status_ status, r.submitter submitter_id, u1.username submitter, r.station_id station_id, t.name station_name,
                t.address station_address, r.submit_time submit_time, r.submit_comment submit_comment, r.auditor auditor_id,
                u2.username auditor, r.audit_comment audit_comment, r.apply_type, o.id order_id, r.audit_time audit_time, r.risk_block risk_block
-        from risk_submit r, user u1, transfer_station t, user u2, logistics l, order_ o
+        from risk_submit_block r, user u1, transfer_station t, user u2, logistics l, order_ o
         where r.submitter = u1.id and r.submitter = #{submitterId} and r.station_id = t.id and r.auditor = u2.id and r.logistics_id = l.id and l.order_id = o.id
 order by submit_time desc;
     </select>
@@ -39,13 +39,13 @@ order by submit_time desc;
         select r.id, r.risk_code, r.type risk_type, r.status_ status, r.submitter submitter_id, u1.username submitter, r.station_id station_id, t.name station_name,
                t.address station_address, r.submit_time submit_time, r.submit_comment submit_comment, r.auditor auditor_id,
                u2.username auditor, r.audit_comment audit_comment, r.audit_time audit_time, r.risk_block risk_block
-        from risk_submit r, user u1, transfer_station t, user u2
+        from risk_submit_block r, user u1, transfer_station t, user u2
         where r.submitter = u1.id and r.station_id = t.id and r.auditor = u2.id
 order by submit_time desc;
     </select>
 
     <insert id="insert" parameterType="RiskSubmit">
-        insert into risk_submit(risk_code, submitter, station_id, logistics_id, submit_comment, type, status_, auditor, submit_time, attached_files, audit_comment, apply_type, audit_time, risk_block)
+        insert into risk_submit_block(risk_code, submitter, station_id, logistics_id, submit_comment, type, status_, auditor, submit_time, attached_files, audit_comment, apply_type, audit_time, risk_block)
     value (#{riskCode}, #{submitter}, #{stationId}, #{logisticsId}, #{submitComment}, #{type}, #{status}, #{auditor}, #{submitTime}, #{attachedFiles}, #{auditComment}, #{applyType}, #{auditTime}, #{riskBlock});
         <selectKey resultType="Integer" keyProperty="id">
             SELECT LAST_INSERT_ID()
@@ -53,14 +53,10 @@ order by submit_time desc;
     </insert>
 
     <update id="updateStatus" parameterType="RiskSubmit">
-        update risk_submit r
+        update risk_submit_block r
         set r.status_ = #{status}, r.audit_comment=#{auditComment}, r.audit_time = #{auditTime}, r.risk_block = #{riskBlock}
         where r.id = #{id};
     </update>
-
-    <select id="selectAll" resultType="RiskSubmit">
-        select * from risk_submit;
-    </select>
 
 
 </mapper>

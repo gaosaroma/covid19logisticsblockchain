@@ -48,9 +48,11 @@ public class UserController {
             if (user.getStatus() != ConstantDefinition.USER_STATUS_AVAILABLE){
                 result.setCode(user.getStatus());
             }else{
-                TransferStation station = stationService.getById(user.getStationId());
                 JSONObject o = (JSONObject) JSONObject.toJSON(user);
-                o.put("station", JSONObject.toJSON(station));
+                if (user.getType() == 4){
+                    TransferStation station = stationService.getById(user.getStationId());
+                    o.put("station", JSONObject.toJSON(station));
+                }
                 result.addObject(o);
             }
         }
@@ -72,6 +74,7 @@ public class UserController {
         if (result.getCode() == ConstantDefinition.REQUEST_OK){
             result.addObject(user);
         }
+        result.setCode(ConstantDefinition.REQUEST_OK);
         return result;
     }
 
